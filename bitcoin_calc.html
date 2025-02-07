@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Calculator</title>
+    <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-align: center;
+            background-color: aliceblue;
+            display: flexbox;
+            margin: 0;
+            padding: 0;
+        }
+        button {
+            background-color: rgb(191, 252, 199);
+            border-radius: 30px;
+        }
+        .price {
+            border: 5px solid black;
+            padding: 10px;
+            margin: 10px;
+            width: 92vw;
+            height: 300px;
+        }
+        .time {
+            border: 5px solid black;
+            padding: 10px;
+            margin: 10px;
+            width: 92vw;
+            height: 200px;
+        }
+        .time_title {
+            margin-bottom: -20px;
+        }
+        .answer {
+            border: 5px solid black;
+            padding: 10px;
+            margin: 10px;
+            width: 92vw;
+            height: 150px;            
+        }
+        #calc_button {
+            height: 40px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="price" >
+            <h2>Bitcoin Price</h2>
+            <p>Current Price (Feb 7)</p>
+            <button onclick="prc(98975.94)">$98,975.94</button>
+            <p>Cathy Wood's Target</p>
+            <button onclick="prc(3800000)">$3,800,000</button>
+            <p>Michael Saylor's target</p>
+            <button onclick="prc(13000000)">$13,000,000</button>
+        </div>
+        <br>
+        <div class="time">
+            <h2 class="time_title">How many months per year do you run your heater?</h2>
+            <h5>*with 24hr/day usage at 400W</h5>
+            <button onclick="tmont(3)">3 months</button>
+            <button onclick="tmont(6)">6 months</button>
+            <button onclick="tmont(8)">8 months</button>
+            <button onclick="tmont(12)">12 months</button>
+            <br><br>
+            <input type="number" id="custom_time" placeholder="Custom duration">
+        </div>
+        <br><br>
+        <div class="answer">
+            <h2 id="ans">Yearly income = $0</h2>
+            <br>
+            <button onclick="calculate()" id="calc_button">Calculate!</button>
+
+        </div>
+    </div>
+    <script>
+        const personal_btc_day_sat = .000005326;
+        let yearly_income = 0;
+        let price = 0;
+        let tdy = 0;
+
+        function prc(x) {
+            price = x;
+        }
+        function tmont(x) {
+            tdy = 30*x;
+        }
+
+        function calculate() {
+            yearly_income = personal_btc_day_sat*price*tdy;
+            document.getElementById("ans").innerText = "Yearly income = $ " + yearly_income;
+        }
+
+        let input = document.getElementById("custom_time");
+        input.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                tdy = input.value;
+                tdy = 30*tdy;         
+            }
+        });
+    </script>
+</body>
+</html>
